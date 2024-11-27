@@ -20,8 +20,8 @@ gulp.task('html-minimizer', function() { // minimize the html files
 });
 
 gulp.task('scripts-mover', function() { // move js files.
-    return gulp.src('src/js/scripts/*.js') // get the js files from src
-        .pipe(gulp.dest('dist/js/scripts'))
+    return gulp.src('src/js/*.js') // get the js files from src
+        .pipe(gulp.dest('dist/js'))
 });
 
 gulp.task("default", gulp.parallel(
