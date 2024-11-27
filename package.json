@@ -9,6 +9,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@babel/parser": "^7.26.2",
+    "@babel/traverse": "^7.25.9",
     "browser-sync": "^3.0.2",
     "gulp": "^4.0.2",
     "gulp-htmlmin": "^5.0.1",
