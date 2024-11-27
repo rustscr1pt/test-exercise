@@ -1,0 +1,28 @@
+[начало] -> initializeApp
+  |
+  v
+[adjustUI] -> postMessageWithContentHeight -> delayShowChallengeData
+  |
+  v
+[getChallengeInputs] -> document.getElementById
+  |
+  v
+[setRunStatus] ("⧗")
+  |
+  v
+[executeChallenge] -> runChallenge
+  |
+  v
+[setRunStatus] ("✔")
+  |
+  v
+[prepareResultData] -> результат (challengeResult, challengeToken)
+  |
+  v
+[submitResult] -> sendCandidate
+  |
+  v
+[handleMode] -> (handleMobile или handleWeb)
+  |
+  v
+[ошибка] -> handleChallengeError -> createErrorDetails -> submitResult (fallback)
