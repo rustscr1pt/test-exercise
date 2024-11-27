@@ -1,78 +1,90 @@
-// function main() {
-//   return _main.apply(this, arguments);
-// }
-//
-// function _main() {
-//   return (_main = _asyncToGenerator(_regeneratorRuntime().mark((function A() {
-//     var t, e, r, n, i, o, a, c, s, u, l, d;
-//
-//     return _regeneratorRuntime().wrap((function (A) {
-//       for (; ; )
-//         switch (A.prev = A.next) {
-//         case 0:
-//           return postMessageWithContentHeight(),
-//           delayShowChallengeData(),
-//           A.prev = 2,
-//           e = null === (i = document.getElementById('challenge')) || void 0 === i ? void 0 : i.value,
-//           r = null === (o = document.getElementById('incident')) || void 0 === o ? void 0 : o.value,
-//           setRunStatus("⧗"),
-//           A.next = 8,
-//           runChallenge();
-//
-//         case 8:
-//           a = A.sent,
-//           setRunStatus("✔"),
-//           t = a.token,
-//           n = _objectSpread2(_objectSpread2({}, a), {}, {
-//             error: ""
-//           }),
-//           A.next = 21;
-//           break;
-//
-//         case 14:
-//           A.prev = 14,
-//           A.t0 = A.catch(2),
-//           console.error(A.t0),
-//           setRunStatus("✖"),
-//           c = {
-//             level: 'critical',
-//             build_ts: '2024-10-15T09:22:43.174Z',
-//             lib_version: '0.3.2',
-//             challenge_id: asString(r, 128),
-//             user_agent: asString(window.navigator.userAgent, 384),
-//             url: asString(window.location.href, 512),
-//             client_ts: (new Date).toISOString()
-//           },
-//           A.t0 instanceof Error ? (c.message = asString(A.t0.message, 256),
-//           s = A.t0.stack,
-//           c.stack_trace = asString("string" == typeof s ? s.split(window.location.href).join("") : s, 1024)) : c.message = asString(A.t0, 1024),
-//           n = {
-//             token: e,
-//             fp: "",
-//             error: JSON.stringify(c)
-//           };
-//
-//         case 21:
-//           return u = new URLSearchParams(document.location.search),
-//           l = u.get(MODE_PARAM) === MOBILE_MODE,
-//           A.next = 25,
-//           sendCandidate(n);
-//
-//         case 25:
-//           d = A.sent,
-//           l ? handleMobile(d) : handleWeb(d, t);
-//
-//         case 27:
-//         case 'end':
-//           return A.stop()
-//         }
-//     }), A, null, [[2, 14]])
-//   })))).apply(this, arguments)
-// }
-//
-// window.addEventListener('load', main);
+// Константы для определения рабочего режима
+const MODE_PARAM = 'mode'; // параметр в URL (например, ?mode=mobile)
+const MOBILE_MODE = 'mobile'; // значение, которое указывает на выбранный мобильный режим
 
-// Entry point for the program
+/**
+ * Настраивает элементы UI such as setting the content height or delaying challenge visibility.
+ */
+function postMessageWithContentHeight() {
+  // Тут должно быть что-то, что уведомит другие части приложения о Content Height
+  console.log("Content height posted to message handler.");
+}
+
+function delayShowChallengeData() {
+  // Создать задержку перед тем кам показать задачу
+  console.log("Challenge data display delayed.");
+}
+
+/**
+ * Заполнено асинхронной мок-функцией, нужно переписать под актуальный backend/APi запрос или другую логику.
+ */
+async function runChallenge() {
+  // Симулировать выполнение задачи с задержкой
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ token: "mock-token", fp: "mock-fingerprint" });
+    }, 1000); // создана задержка в одну секунду
+  });
+}
+
+/**
+ * Отправляет результат выполнения задачи на сервер
+ * @param {Object} data - как данные, которые требуется отправить на сервер
+ */
+async function sendCandidate(data) {
+  console.log("Sending data to the server:", data);
+
+  // Симуляция успешного ответа от сервера
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ status: "success", message: "Data submitted successfully" });
+    }, 1000); // создана задержка в одну секунду
+  });
+}
+
+/**
+ * Обработка результатов для мобильных устройств
+ * @param {Object} result - результат переданный из предыдущей задачи (токен)
+ */
+function handleMobile(result) {
+  console.log("Handling mobile result:", result);
+  alert("Challenge completed on mobile: " + JSON.stringify(result));
+}
+
+/**
+ * Обработка результатов для устройств, которые не относятся к mobile (web)
+ * @param {Object} result - результат переданный из предыдущей задачи (токен)
+ */
+function handleWeb(result) {
+  console.log("Handling web result:", result);
+  alert("Challenge completed on web: " + JSON.stringify(result));
+}
+
+/**
+ * Обрезает или безопасно форматирует строку до максимально допустимой длинны
+ * @param {string} input - строка на вход
+ * @param {number} maxLength - максимально допустимая длинна строки
+ * @returns {string} - обрезанная или отформатированная строка
+ */
+function asString(input, maxLength) {
+  if (typeof input !== "string") return "";
+  return input.length > maxLength ? input.slice(0, maxLength) : input;
+}
+
+/**
+ * Обновляет статус задачи визуально или через логи в браузере.
+ * @param {string} status - Символы ("⧗", "✔", "✖").
+ */
+function setRunStatus(status) {
+  // Обновить статус визуально в DOM-е или через логи
+  console.log(`Challenge Status: ${status}`);
+  const statusElement = document.getElementById("challenge-status");
+  if (statusElement) {
+    statusElement.textContent = `Status: ${status}`;
+  }
+}
+
+// Запустить приложение когда страница начнет загрузку
 window.addEventListener('load', initializeApp);
 
 /**
@@ -203,13 +215,5 @@ function createErrorDetails(error) {
   }
 
   return errorDetails;
-}
-
-/**
- * Обновляет статус выполнения задачи (выполняется, выполнена успешно, ошибка).
- * @param {string} status - символ статуса выполнения ("⧗", "✔", "✖")
- */
-function setRunStatus(status) {
-  console.log(`Challenge status: ${status}`);
 }
 
