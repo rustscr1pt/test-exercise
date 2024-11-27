@@ -3,7 +3,7 @@ const MODE_PARAM = 'mode'; // параметр в URL (например, ?mode=m
 const MOBILE_MODE = 'mobile'; // значение, которое указывает на выбранный мобильный режим
 
 /**
- * Настраивает элементы UI such as setting the content height or delaying challenge visibility.
+ * Настраивает элементы UI
  */
 function postMessageWithContentHeight() {
   // Тут должно быть что-то, что уведомит другие части приложения о Content Height
